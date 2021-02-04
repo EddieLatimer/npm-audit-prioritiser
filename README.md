@@ -17,3 +17,8 @@ where `critical` is the most severe.
 ## Compatibility
 Known working platforms:
 - Ubuntu with Python 3.9
+
+## Running tests
+`python3.9 -m pip install -r tests/requirements.txt`
+
+`python3.9 -m nose `
