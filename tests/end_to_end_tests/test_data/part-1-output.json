@@ -1,0 +1,132 @@
+{
+  "vulnerabilities": {
+    "lodash": {
+      "name": "lodash",
+      "severity": "high",
+      "via": [
+        {
+          "source": 1065,
+          "name": "lodash",
+          "dependency": "lodash",
+          "title": "Prototype Pollution",
+          "url": "https://npmjs.com/advisories/1065",
+          "severity": "high",
+          "range": "<4.17.12"
+        },
+        {
+          "source": 1523,
+          "name": "lodash",
+          "dependency": "lodash",
+          "title": "Prototype Pollution",
+          "url": "https://npmjs.com/advisories/1523",
+          "severity": "low",
+          "range": "<4.17.19"
+        },
+        {
+          "source": 577,
+          "name": "lodash",
+          "dependency": "lodash",
+          "title": "Prototype Pollution",
+          "url": "https://npmjs.com/advisories/577",
+          "severity": "low",
+          "range": "<4.17.5"
+        },
+        {
+          "source": 782,
+          "name": "lodash",
+          "dependency": "lodash",
+          "title": "Prototype Pollution",
+          "url": "https://npmjs.com/advisories/782",
+          "severity": "high",
+          "range": "<4.17.11"
+        }
+      ],
+      "effects": [],
+      "range": "<=4.17.18",
+      "nodes": [
+        "node_modules/lodash"
+      ],
+      "fixAvailable": {
+        "name": "lodash",
+        "version": "4.17.20",
+        "isSemVerMajor": true
+      }
+    },
+    "npm": {
+      "name": "npm",
+      "severity": "high",
+      "via": [
+        {
+          "source": 1436,
+          "name": "npm",
+          "dependency": "npm",
+          "title": "Symlink reference outside of node_modules",
+          "url": "https://npmjs.com/advisories/1436",
+          "severity": "low",
+          "range": "<6.13.3"
+        },
+        {
+          "source": 1437,
+          "name": "npm",
+          "dependency": "npm",
+          "title": "Global node_modules Binary Overwrite",
+          "url": "https://npmjs.com/advisories/1437",
+          "severity": "low",
+          "range": "<6.13.4"
+        },
+        {
+          "source": 152,
+          "name": "npm",
+          "dependency": "npm",
+          "title": "Local Privilege Escalation",
+          "url": "https://npmjs.com/advisories/152",
+          "severity": "low",
+          "range": "<1.3.3"
+        },
+        {
+          "source": 1543,
+          "name": "npm",
+          "dependency": "npm",
+          "title": "Sensitive Data Exposure",
+          "url": "https://npmjs.com/advisories/1543",
+          "severity": "low",
+          "range": "<6.14.6"
+        },
+        {
+          "source": 98,
+          "name": "npm",
+          "dependency": "npm",
+          "title": "npm Token Leak",
+          "url": "https://npmjs.com/advisories/98",
+          "severity": "high",
+          "range": "<= 2.15.0 || >= 3.0.0 <= 3.8.2"
+        }
+      ],
+      "effects": [],
+      "range": "<=6.14.5",
+      "nodes": [
+        ""
+      ],
+      "fixAvailable": true
+    }
+  },
+  "auditReportVersion": 2,
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 7,
+      "moderate": 3,
+      "high": 2,
+      "critical": 0,
+      "total": 12
+    },
+    "dependencies": {
+      "prod": 4,
+      "dev": 265,
+      "optional": 4,
+      "peer": 0,
+      "peerOptional": 0,
+      "total": 268
+    }
+  }
+}
