@@ -1,8 +1,11 @@
+from copy import deepcopy
 import unittest
-from hamcrest import assert_that, is_
+from hamcrest import assert_that, is_, equal_to
 from data_generators import generate_vulnerability_message, generate_top_level_data, \
-    generate_dict_of_vulnerabilities_messages, generate_metadata, generate_vulnerabilities_summary
-from filter_on_highest_severity import get_severity, get_vulnerabilities, get_highest_severity
+    generate_dict_of_vulnerabilities_messages, generate_metadata, generate_vulnerabilities_summary,\
+    generate_all_data
+from filter_on_highest_severity import get_severity, get_vulnerabilities, get_highest_severity, \
+    filter_on_highest_severity
 
 
 class TestGetSeverity(unittest.TestCase):
@@ -80,3 +83,65 @@ class TestGetHighestSeverity(unittest.TestCase):
         metadata = generate_metadata(vulnerabilities_summary)
         data = generate_top_level_data({}, metadata=metadata)
         assert_that(get_highest_severity(data), is_("low"))
+
+
+def retrieve_vulnerability_names(top_level_data: dict):
+    if not top_level_data:
+        return []
+    if "vulnerabilities" not in top_level_data:
+        return []
+
+    vulnerability_names = []
+    for vulnerability in top_level_data["vulnerabilities"]:
+        vulnerability_names.append(vulnerability)
+    return vulnerability_names
+
+
+class TestFilterOnHighestSeverity(unittest.TestCase):
+    def test_given_vulnerability_with_missing_severity_then_gets_removed(self):
+        data = generate_all_data({"a": "low"})
+        del data['vulnerabilities']["a"]["severity"]
+        filtered_data = filter_on_highest_severity(deepcopy(data))
+
+        del data['vulnerabilities']["a"]
+        assert_that(filtered_data, is_(data))
+
+    def test_given_vulnerabilities_missing_then_returns_as_given(self):
+        data = generate_all_data({})
+        del data['vulnerabilities']
+
+        assert_that(filter_on_highest_severity(deepcopy(data)), is_(data))
+
+    def test_given_5_vulnerabilities_of_different_severities_then_returns_only_the_most_sever(self):
+        data = generate_all_data({"a": "low", "b": "moderate", "c": "high", "d": "critical", "e": "info"})
+
+        filtered_data = filter_on_highest_severity(data)
+
+        assert_that(retrieve_vulnerability_names(filtered_data), equal_to(["d"]))
+
+    def test_given_no_vulnerabilities_then_returns_only_the_most_sever(self):
+        vulnerabilities = generate_dict_of_vulnerabilities_messages({})
+        vulnerabilities_summary = generate_vulnerabilities_summary()
+        metadata = generate_metadata(vulnerabilities_summary)
+        data = generate_top_level_data(vulnerabilities, metadata=metadata)
+
+        filtered_data = filter_on_highest_severity(data)
+
+        assert_that(retrieve_vulnerability_names(filtered_data), equal_to([]))
+
+    def test_given_3_vulnerabilities_all_info_severity_then_returns_all(self):
+        data = generate_all_data({"a": "info", "b": "info", "c": "info"})
+
+        filtered_data = filter_on_highest_severity(data)
+
+        assert_that(retrieve_vulnerability_names(filtered_data), equal_to(["a", "b", "c"]))
+
+    def test_given_a_vulnerability_of_unexpected_severity_then_returns_nothing(self):
+        vulnerabilities = generate_dict_of_vulnerabilities_messages({"a": "piccolo"})
+        vulnerabilities_summary = dict(piccolo=1, moderate=0, low=0, total=1, critical=0, info=0, high=0)
+        metadata = generate_metadata(vulnerabilities_summary)
+        data = generate_top_level_data(vulnerabilities, metadata=metadata)
+
+        filtered_data = filter_on_highest_severity(data)
+
+        assert_that(retrieve_vulnerability_names(filtered_data), equal_to([]))
