@@ -1,0 +1,162 @@
+{
+  "auditReportVersion": 2,
+  "vulnerabilities": {
+    "handlebars": {
+      "name": "handlebars",
+      "severity": "high",
+      "via": [
+        {
+          "source": 1164,
+          "name": "handlebars",
+          "dependency": "handlebars",
+          "title": "Prototype Pollution",
+          "url": "https://npmjs.com/advisories/1164",
+          "severity": "high",
+          "range": "<3.0.8 || >=4.0.0 <4.3.0"
+        },
+        {
+          "source": 1300,
+          "name": "handlebars",
+          "dependency": "handlebars",
+          "title": "Denial of Service",
+          "url": "https://npmjs.com/advisories/1300",
+          "severity": "moderate",
+          "range": ">=4.0.0 <4.4.5"
+        },
+        {
+          "source": 1316,
+          "name": "handlebars",
+          "dependency": "handlebars",
+          "title": "Arbitrary Code Execution",
+          "url": "https://npmjs.com/advisories/1316",
+          "severity": "high",
+          "range": "<3.0.8 || >=4.0.0 <4.5.2"
+        },
+        {
+          "source": 1324,
+          "name": "handlebars",
+          "dependency": "handlebars",
+          "title": "Arbitrary Code Execution",
+          "url": "https://npmjs.com/advisories/1324",
+          "severity": "high",
+          "range": "<3.0.8 || >=4.0.0 <4.5.3"
+        },
+        "optimist"
+      ],
+      "effects": [],
+      "range": "<=4.7.3",
+      "nodes": [
+        "node_modules/handlebars"
+      ],
+      "fixAvailable": true
+    },
+    "lodash": {
+      "name": "lodash",
+      "severity": "high",
+      "via": [
+        {
+          "source": 1065,
+          "name": "lodash",
+          "dependency": "lodash",
+          "title": "Prototype Pollution",
+          "url": "https://npmjs.com/advisories/1065",
+          "severity": "high",
+          "range": "<4.17.12"
+        },
+        {
+          "source": 1523,
+          "name": "lodash",
+          "dependency": "lodash",
+          "title": "Prototype Pollution",
+          "url": "https://npmjs.com/advisories/1523",
+          "severity": "low",
+          "range": "<4.17.19"
+        },
+        {
+          "source": 577,
+          "name": "lodash",
+          "dependency": "lodash",
+          "title": "Prototype Pollution",
+          "url": "https://npmjs.com/advisories/577",
+          "severity": "low",
+          "range": "<4.17.5"
+        },
+        {
+          "source": 782,
+          "name": "lodash",
+          "dependency": "lodash",
+          "title": "Prototype Pollution",
+          "url": "https://npmjs.com/advisories/782",
+          "severity": "high",
+          "range": "<4.17.11"
+        }
+      ],
+      "effects": [],
+      "range": "<=4.17.18",
+      "nodes": [
+        "node_modules/lodash"
+      ],
+      "fixAvailable": {
+        "name": "lodash",
+        "version": "4.17.20",
+        "isSemVerMajor": true
+      }
+    },
+    "minimist": {
+      "name": "minimist",
+      "severity": "low",
+      "via": [
+        {
+          "source": 1179,
+          "name": "minimist",
+          "dependency": "minimist",
+          "title": "Prototype Pollution",
+          "url": "https://npmjs.com/advisories/1179",
+          "severity": "low",
+          "range": "<0.2.1 || >=1.0.0 <1.2.3"
+        }
+      ],
+      "effects": [
+        "optimist"
+      ],
+      "range": "<0.2.1 || >=1.0.0 <1.2.3",
+      "nodes": [
+        "node_modules/minimist"
+      ],
+      "fixAvailable": true
+    },
+    "optimist": {
+      "name": "optimist",
+      "severity": "low",
+      "via": [
+        "minimist"
+      ],
+      "effects": [
+        "handlebars"
+      ],
+      "range": ">=0.6.0",
+      "nodes": [
+        "node_modules/optimist"
+      ],
+      "fixAvailable": true
+    }
+  },
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 2,
+      "moderate": 0,
+      "high": 2,
+      "critical": 0,
+      "total": 4
+    },
+    "dependencies": {
+      "prod": 8,
+      "dev": 0,
+      "optional": 1,
+      "peer": 0,
+      "peerOptional": 0,
+      "total": 8
+    }
+  }
+}

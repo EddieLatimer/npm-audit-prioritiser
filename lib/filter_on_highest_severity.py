@@ -29,6 +29,14 @@ def _remove_vulnerabilities(complete_data: dict, names: list):
         _remove_vulnerability(complete_data, name)
 
 
+def _has_available_fix(vulnerability: dict):
+    if "fixAvailable" not in vulnerability:
+        return False
+    if vulnerability["fixAvailable"] is not True:
+        return False
+    return True
+
+
 def _get_vulnerability_tallies(complete_data: dict):
     vulnerabilities = _get_vulnerabilities(complete_data)
     vulnerability_tallies = {vulnerability: 0 for vulnerability in VULNERABILITIES_ORDER}
@@ -51,6 +59,21 @@ def _get_highest_severity(complete_input: dict):
                 vulnerabilities_totals[vulnerability] > 0:
             return vulnerability
     return None
+
+
+def remove_vulnerabilities_with_available_fixes(data: dict):
+    vulnerabilities = _get_vulnerabilities(data)
+    if not vulnerabilities:
+        return data
+
+    to_remove = []
+    for vulnerability in vulnerabilities:
+        if _has_available_fix(vulnerabilities[vulnerability]):
+            to_remove += [vulnerability]
+
+    _remove_vulnerabilities(data, to_remove)
+
+    return data
 
 
 def filter_on_highest_severity(input_data: dict):

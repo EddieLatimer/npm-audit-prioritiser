@@ -10,12 +10,13 @@ TEST_DATA_PATH = FILE_DIRECTORY + "test_data/"
 TEST_DATA_TEMP_PATH = FILE_DIRECTORY + "test_data/temp/"
 
 
-def run_terminal_command_invoke(_, input_file_path: str, output_file_path: str):
-    os.system(f"cd {FILE_DIRECTORY}; cd ../../; invoke highest-severity -i {input_file_path} -o {output_file_path} -q")
+def run_terminal_command_invoke(_, input_file_path: str, output_file_path: str, flag: str = ""):
+    os.system(f"cd {FILE_DIRECTORY}; cd ../../; invoke highest-severity -i {input_file_path} -o {output_file_path} "
+              f"{flag} -q")
 
 
-def run_terminal_command_filter_vulnerabilities(_, input_file_path: str, output_file_path: str):
-    os.system(f"{FILE_DIRECTORY}../../filter_vulnerabilities.py {input_file_path} {output_file_path} -q")
+def run_terminal_command_filter_vulnerabilities(_, input_file_path: str, output_file_path: str, flag: str = ""):
+    os.system(f"{FILE_DIRECTORY}../../filter_vulnerabilities.py {input_file_path} {output_file_path} {flag} -q")
 
 
 def parse_json_file_to_dict(file: str):
@@ -63,3 +64,12 @@ class TestTerminalInterfaces(unittest.TestCase):
         assert_json_files_are_equivalent(output_file, expected_output_file)
 
         shutil.rmtree(non_existent_directory)
+
+    def test_filtering_on_highest_severity_terminal_command_with_ignore_fix_available_flag(self):
+        input_file = TEST_DATA_PATH + "part-2-input.json"
+        output_file = TEST_DATA_TEMP_PATH + "part-2-output.json"
+        expected_output_file = TEST_DATA_PATH + "part-2-output.json"
+
+        self.run_terminal_command(input_file, output_file, "--exclude-fix-available")
+
+        assert_json_files_are_equivalent(output_file, expected_output_file)
