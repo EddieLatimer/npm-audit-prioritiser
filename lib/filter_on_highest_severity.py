@@ -37,7 +37,17 @@ def _assert_data_validity(complete_input: dict):
 
 
 def _get_vulnerability_tallies(complete_data: dict):
-    return complete_data["metadata"]["vulnerabilities"]
+    vulnerabilities = _get_vulnerabilities(complete_data)
+    vulnerability_tallies = {vulnerability: 0 for vulnerability in VULNERABILITIES_ORDER}
+    if not vulnerabilities:
+        return vulnerability_tallies
+
+    for vulnerability in vulnerabilities:
+        severity = _get_severity(vulnerabilities[vulnerability])
+        if severity in VULNERABILITIES_ORDER:
+            vulnerability_tallies[severity] += 1
+
+    return vulnerability_tallies
 
 
 def _get_highest_severity(complete_input: dict):
@@ -60,7 +70,8 @@ def filter_on_highest_severity(input_data: dict):
 
     to_remove = []
     for vulnerability in vulnerabilities:
-        if _get_severity(_get_vulnerability(input_data, vulnerability)) != highest_severity:
+        severity = _get_severity(_get_vulnerability(input_data, vulnerability))
+        if not severity or severity != highest_severity:
             to_remove += [vulnerability]
 
     _remove_vulnerabilities(input_data, to_remove)
