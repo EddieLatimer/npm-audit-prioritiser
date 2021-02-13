@@ -16,6 +16,16 @@ where `critical` is the most severe.
 
 
 ## Directions of use
+
+### Running using `filter_vulnerabilites.py`
+
+#### Example usage:
+`./filter_vulnerabilities.py tests/end_to_end_tests/test_data/part-1-input.json output.json
+--excludeFixAvailable`
+
+For more information run `./filter_vulnerabilities.py --help`
+
+
 ### Running using `invoke`
 
 #### Example usage: 
