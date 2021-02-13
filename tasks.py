@@ -1,5 +1,5 @@
 from invoke import task
-from filter_on_highest_severity import filter_on_highest_severity
+from lib.filter_on_highest_severity import filter_on_highest_severity
 from lib.json_file_io import parse_json_file_to_dict, write_dictionary_to_json_file
 
 HELP = {
