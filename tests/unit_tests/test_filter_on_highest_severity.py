@@ -3,7 +3,7 @@ import unittest
 from hamcrest import assert_that, is_, equal_to
 from data_generators import generate_top_level_data, generate_dict_of_vulnerabilities_messages, generate_metadata, \
     generate_all_data, generate_all_data_with_fix_availability
-from lib.filter_on_highest_severity import NpmAuditData
+from lib.npm_audit_data import NpmAuditData
 
 
 def retrieve_vulnerability_names(top_level_data: dict):

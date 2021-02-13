@@ -1,4 +1,4 @@
-from lib.filter_on_highest_severity import NpmAuditData
+from lib.npm_audit_data import NpmAuditData
 from lib.json_file_io import parse_json_file_to_dict, write_dictionary_to_json_file
 
 
