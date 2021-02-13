@@ -29,13 +29,6 @@ def _remove_vulnerabilities(complete_data: dict, names: list):
         _remove_vulnerability(complete_data, name)
 
 
-def _assert_data_validity(complete_input: dict):
-    if "metadata" not in complete_input:
-        raise ValueError("complete_dict does not contain 'metadata'")
-    if not complete_input["metadata"]:
-        raise ValueError("complete_input['metadata'] is empty")
-
-
 def _get_vulnerability_tallies(complete_data: dict):
     vulnerabilities = _get_vulnerabilities(complete_data)
     vulnerability_tallies = {vulnerability: 0 for vulnerability in VULNERABILITIES_ORDER}
@@ -51,8 +44,6 @@ def _get_vulnerability_tallies(complete_data: dict):
 
 
 def _get_highest_severity(complete_input: dict):
-    _assert_data_validity(complete_input)
-
     vulnerabilities_totals = _get_vulnerability_tallies(complete_input)
 
     for vulnerability in VULNERABILITIES_ORDER:

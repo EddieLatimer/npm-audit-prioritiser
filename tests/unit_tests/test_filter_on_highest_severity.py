@@ -92,15 +92,6 @@ class TestFilterOnHighestSeverity(unittest.TestCase):
         assert_that(filter_on_highest_severity(data)["vulnerabilities"], is_({}))
 
     # ================= ERROR CASES =================
-    def test_given_data_with_empty_metadata_then_raises_value_error(self):
-        data = generate_top_level_data({}, metadata={})
-        self.assertRaises(ValueError, filter_on_highest_severity, data)
-
-    def test_given_data_with_no_metadata_then_raises_value_error(self):
-        data = generate_top_level_data({})
-        del data["metadata"]
-        self.assertRaises(ValueError, filter_on_highest_severity, data)
-
     def test_given_vulnerabilities_missing_then_returns_as_given(self):
         data = generate_all_data({})
         del data['vulnerabilities']
