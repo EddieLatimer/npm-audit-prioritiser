@@ -29,20 +29,29 @@ def _remove_vulnerabilities(complete_data: dict, names: list):
         _remove_vulnerability(complete_data, name)
 
 
-def _assert_data_validity(complete_input: dict):
-    if "metadata" not in complete_input:
-        raise ValueError("complete_dict does not contain 'metadata'")
-    if not complete_input["metadata"]:
-        raise ValueError("complete_input['metadata'] is empty")
+def _has_available_fix(vulnerability: dict):
+    if "fixAvailable" not in vulnerability:
+        return False
+    if vulnerability["fixAvailable"] is not True:
+        return False
+    return True
 
 
 def _get_vulnerability_tallies(complete_data: dict):
-    return complete_data["metadata"]["vulnerabilities"]
+    vulnerabilities = _get_vulnerabilities(complete_data)
+    vulnerability_tallies = {vulnerability: 0 for vulnerability in VULNERABILITIES_ORDER}
+    if not vulnerabilities:
+        return vulnerability_tallies
+
+    for vulnerability in vulnerabilities:
+        severity = _get_severity(vulnerabilities[vulnerability])
+        if severity in VULNERABILITIES_ORDER:
+            vulnerability_tallies[severity] += 1
+
+    return vulnerability_tallies
 
 
 def _get_highest_severity(complete_input: dict):
-    _assert_data_validity(complete_input)
-
     vulnerabilities_totals = _get_vulnerability_tallies(complete_input)
 
     for vulnerability in VULNERABILITIES_ORDER:
@@ -50,6 +59,21 @@ def _get_highest_severity(complete_input: dict):
                 vulnerabilities_totals[vulnerability] > 0:
             return vulnerability
     return None
+
+
+def remove_vulnerabilities_with_available_fixes(data: dict):
+    vulnerabilities = _get_vulnerabilities(data)
+    if not vulnerabilities:
+        return data
+
+    to_remove = []
+    for vulnerability in vulnerabilities:
+        if _has_available_fix(vulnerabilities[vulnerability]):
+            to_remove += [vulnerability]
+
+    _remove_vulnerabilities(data, to_remove)
+
+    return data
 
 
 def filter_on_highest_severity(input_data: dict):
@@ -60,7 +84,8 @@ def filter_on_highest_severity(input_data: dict):
 
     to_remove = []
     for vulnerability in vulnerabilities:
-        if _get_severity(_get_vulnerability(input_data, vulnerability)) != highest_severity:
+        severity = _get_severity(_get_vulnerability(input_data, vulnerability))
+        if not severity or severity != highest_severity:
             to_remove += [vulnerability]
 
     _remove_vulnerabilities(input_data, to_remove)

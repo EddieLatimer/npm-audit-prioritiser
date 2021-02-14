@@ -2,8 +2,8 @@ from copy import deepcopy
 import unittest
 from hamcrest import assert_that, is_, equal_to
 from data_generators import generate_top_level_data, generate_dict_of_vulnerabilities_messages, generate_metadata, \
-    generate_all_data
-from lib.filter_on_highest_severity import filter_on_highest_severity
+    generate_all_data, generate_all_data_with_fix_availability
+from lib.filter_on_highest_severity import filter_on_highest_severity, remove_vulnerabilities_with_available_fixes
 
 
 def retrieve_vulnerability_names(top_level_data: dict):
@@ -92,15 +92,6 @@ class TestFilterOnHighestSeverity(unittest.TestCase):
         assert_that(filter_on_highest_severity(data)["vulnerabilities"], is_({}))
 
     # ================= ERROR CASES =================
-    def test_given_data_with_empty_metadata_then_raises_value_error(self):
-        data = generate_top_level_data({}, metadata={})
-        self.assertRaises(ValueError, filter_on_highest_severity, data)
-
-    def test_given_data_with_no_metadata_then_raises_value_error(self):
-        data = generate_top_level_data({})
-        del data["metadata"]
-        self.assertRaises(ValueError, filter_on_highest_severity, data)
-
     def test_given_vulnerabilities_missing_then_returns_as_given(self):
         data = generate_all_data({})
         del data['vulnerabilities']
@@ -153,3 +144,78 @@ class TestFilterOnHighestSeverity(unittest.TestCase):
         del data_with_vulnerability_removed["vulnerabilities"]["a"]
 
         assert_that(filtered_data, equal_to(data_with_vulnerability_removed))
+
+
+def remove_vulnerabilities(data: dict, to_remove: list):
+    for vulnerability in to_remove:
+        del data["vulnerabilities"][vulnerability]
+    return data
+
+
+class TestRemoveVulnerabilitiesWithAvailableFixes(unittest.TestCase):
+    def test_given_no_vulnerabilities_then_it_is_removed(self):
+        data = generate_all_data({})
+
+        filtered_data = remove_vulnerabilities_with_available_fixes(deepcopy(data))
+
+        assert_that(filtered_data, equal_to(data))
+
+    def test_given_missing_vulnerabilities_then_return_given_data(self):
+        data = generate_all_data({})
+
+        del data["vulnerabilities"]
+        filtered_data = remove_vulnerabilities_with_available_fixes(deepcopy(data))
+
+        assert_that(filtered_data, equal_to(data))
+
+    def test_given_only_one_vulnerability_with_an_available_fix_then_it_is_removed(self):
+        without_fixes = {}
+        with_fixes = {"a": "critical"}
+        data = generate_all_data_with_fix_availability(without_fixes, with_fixes)
+
+        filtered_data = remove_vulnerabilities_with_available_fixes(deepcopy(data))
+
+        remove_vulnerabilities(data, ["a"])
+
+        assert_that(filtered_data, equal_to(data))
+
+    def test_given_only_one_vulnerability_with_fixavailable_key_missing_then_return_input(self):
+        without_fixes = {"a": "critical"}
+        with_fixes = {}
+        data = generate_all_data_with_fix_availability(without_fixes, with_fixes)
+        del data["vulnerabilities"]["a"]["fixAvailable"]
+
+        filtered_data = remove_vulnerabilities_with_available_fixes(deepcopy(data))
+
+        assert_that(filtered_data, equal_to(data))
+
+    def test_given_only_one_vulnerability_with_no_fix_available_then_return_input(self):
+        without_fixes = {"a": "critical"}
+        with_fixes = {}
+        data = generate_all_data_with_fix_availability(without_fixes, with_fixes)
+
+        filtered_data = remove_vulnerabilities_with_available_fixes(deepcopy(data))
+
+        assert_that(filtered_data, equal_to(data))
+
+    def test_given_one_vulnerability_with_fix_and_one_without_then_return_just_one_without(self):
+        without_fixes = {"a": "critical"}
+        with_fixes = {"b": "critical"}
+        data = generate_all_data_with_fix_availability(without_fixes, with_fixes)
+
+        filtered_data = remove_vulnerabilities_with_available_fixes(deepcopy(data))
+
+        remove_vulnerabilities(data, ["b"])
+
+        assert_that(filtered_data, equal_to(data))
+
+    def test_given_two_vulnerabilities_with_fixes_and_two_without_then_return_just_ones_without(self):
+        without_fixes = {"a": "critical", "b": "critical"}
+        with_fixes = {"c": "critical", "d": "critical"}
+        data = generate_all_data_with_fix_availability(without_fixes, with_fixes)
+
+        filtered_data = remove_vulnerabilities_with_available_fixes(deepcopy(data))
+
+        remove_vulnerabilities(data, ["c", "d"])
+
+        assert_that(filtered_data, equal_to(data))

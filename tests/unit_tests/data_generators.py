@@ -1,4 +1,12 @@
-def generate_vulnerability_message(severity: str):
+def generate_vulnerability_message(severity: str, with_fix: bool = False):
+    fix_available = {
+        "name": "generated",
+        "version": "4.17.20",
+        "isSemVerMajor": True
+    }
+    if with_fix:
+        fix_available = True
+
     return {
         "name": "generated",
         "severity": severity,
@@ -12,12 +20,12 @@ def generate_vulnerability_message(severity: str):
         "nodes": [
             "node_modules/anymatch"
         ],
-        "fixAvailable": True
+        "fixAvailable": fix_available
     }.copy()
 
 
-def generate_dict_of_vulnerabilities_messages(names_with_severities: dict):
-    return {name: generate_vulnerability_message(severity) for name, severity in names_with_severities.items()}
+def generate_dict_of_vulnerabilities_messages(names_with_severities: dict, with_fix: bool = False):
+    return {name: generate_vulnerability_message(severity, with_fix) for name, severity in names_with_severities.items()}
 
 
 def generate_vulnerabilities_summary(info: int = 0, low: int = 0, moderate: int = 0,
@@ -63,4 +71,16 @@ def generate_all_data(names_with_severities: dict):
     vulnerabilities = generate_dict_of_vulnerabilities_messages(names_with_severities)
     vulnerabilities_summary = tally_severities(names_with_severities)
     metadata = generate_metadata(vulnerabilities_summary)
+    return generate_top_level_data(vulnerabilities, metadata=metadata)
+
+
+def generate_all_data_with_fix_availability(names_with_severities_without_fix: dict, names_with_severities_with_fix: dict):
+    vulnerabilities_without_fix = generate_dict_of_vulnerabilities_messages(names_with_severities_without_fix)
+    vulnerabilities_with_fix = generate_dict_of_vulnerabilities_messages(names_with_severities_with_fix, True)
+    vulnerabilities = vulnerabilities_without_fix | vulnerabilities_with_fix
+
+    vulnerabilities_summary = tally_severities(names_with_severities_without_fix | names_with_severities_with_fix)
+
+    metadata = generate_metadata(vulnerabilities_summary)
+
     return generate_top_level_data(vulnerabilities, metadata=metadata)
