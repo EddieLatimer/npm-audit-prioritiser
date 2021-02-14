@@ -1,0 +1,339 @@
+{
+  "auditReportVersion": 2,
+  "vulnerabilities": {
+    "anymatch": {
+      "name": "anymatch",
+      "severity": "low",
+      "via": [
+        "micromatch"
+      ],
+      "effects": [
+        "chokidar"
+      ],
+      "range": "1.2.0 - 1.3.2",
+      "nodes": [
+        "node_modules/anymatch"
+      ],
+      "fixAvailable": true
+    },
+    "braces": {
+      "name": "braces",
+      "severity": "low",
+      "via": [
+        {
+          "source": 786,
+          "name": "braces",
+          "dependency": "braces",
+          "title": "Regular Expression Denial of Service",
+          "url": "https://npmjs.com/advisories/786",
+          "severity": "low",
+          "range": "<2.3.1"
+        }
+      ],
+      "effects": [
+        "micromatch"
+      ],
+      "range": "<2.3.1",
+      "nodes": [
+        "node_modules/braces"
+      ],
+      "fixAvailable": true
+    },
+    "chokidar": {
+      "name": "chokidar",
+      "severity": "low",
+      "via": [
+        "anymatch"
+      ],
+      "effects": [],
+      "range": "1.3.0 - 1.7.0",
+      "nodes": [
+        "node_modules/chokidar"
+      ],
+      "fixAvailable": true
+    },
+    "hoek": {
+      "name": "hoek",
+      "severity": "moderate",
+      "via": [
+        {
+          "source": 566,
+          "name": "hoek",
+          "dependency": "hoek",
+          "title": "Prototype Pollution",
+          "url": "https://npmjs.com/advisories/566",
+          "severity": "moderate",
+          "range": "<= 4.2.0 || >= 5.0.0 < 5.0.3"
+        }
+      ],
+      "effects": [
+        "joi"
+      ],
+      "range": "<=4.2.0 || 5.0.0 - 5.0.2",
+      "nodes": [
+        "node_modules/hoek"
+      ],
+      "fixAvailable": {
+        "name": "joi",
+        "version": "17.3.0",
+        "isSemVerMajor": true
+      }
+    },
+    "joi": {
+      "name": "joi",
+      "severity": "moderate",
+      "via": [
+        "hoek"
+      ],
+      "effects": [],
+      "range": "0.0.2 - 8.0.5",
+      "nodes": [
+        "node_modules/joi"
+      ],
+      "fixAvailable": {
+        "name": "joi",
+        "version": "17.3.0",
+        "isSemVerMajor": true
+      }
+    },
+    "lodash": {
+      "name": "lodash",
+      "severity": "high",
+      "via": [
+        {
+          "source": 1065,
+          "name": "lodash",
+          "dependency": "lodash",
+          "title": "Prototype Pollution",
+          "url": "https://npmjs.com/advisories/1065",
+          "severity": "high",
+          "range": "<4.17.12"
+        },
+        {
+          "source": 1523,
+          "name": "lodash",
+          "dependency": "lodash",
+          "title": "Prototype Pollution",
+          "url": "https://npmjs.com/advisories/1523",
+          "severity": "low",
+          "range": "<4.17.19"
+        },
+        {
+          "source": 577,
+          "name": "lodash",
+          "dependency": "lodash",
+          "title": "Prototype Pollution",
+          "url": "https://npmjs.com/advisories/577",
+          "severity": "low",
+          "range": "<4.17.5"
+        },
+        {
+          "source": 782,
+          "name": "lodash",
+          "dependency": "lodash",
+          "title": "Prototype Pollution",
+          "url": "https://npmjs.com/advisories/782",
+          "severity": "high",
+          "range": "<4.17.11"
+        }
+      ],
+      "effects": [],
+      "range": "<=4.17.18",
+      "nodes": [
+        "node_modules/lodash"
+      ],
+      "fixAvailable": {
+        "name": "lodash",
+        "version": "4.17.20",
+        "isSemVerMajor": true
+      }
+    },
+    "micromatch": {
+      "name": "micromatch",
+      "severity": "low",
+      "via": [
+        "braces"
+      ],
+      "effects": [
+        "anymatch"
+      ],
+      "range": "0.2.0 - 2.3.11",
+      "nodes": [
+        "node_modules/micromatch"
+      ],
+      "fixAvailable": true
+    },
+    "minimist": {
+      "name": "minimist",
+      "severity": "low",
+      "via": [
+        {
+          "source": 1179,
+          "name": "minimist",
+          "dependency": "minimist",
+          "title": "Prototype Pollution",
+          "url": "https://npmjs.com/advisories/1179",
+          "severity": "low",
+          "range": "<0.2.1 || >=1.0.0 <1.2.3"
+        }
+      ],
+      "effects": [
+        "optimist"
+      ],
+      "range": "<0.2.1 || >=1.0.0 <1.2.3",
+      "nodes": [
+        "node_modules/optimist/node_modules/minimist"
+      ],
+      "fixAvailable": {
+        "name": "webpack",
+        "version": "5.16.0",
+        "isSemVerMajor": true
+      }
+    },
+    "moment": {
+      "name": "moment",
+      "severity": "moderate",
+      "via": [
+        {
+          "source": 532,
+          "name": "moment",
+          "dependency": "moment",
+          "title": "Regular Expression Denial of Service",
+          "url": "https://npmjs.com/advisories/532",
+          "severity": "low",
+          "range": "<2.19.3"
+        },
+        {
+          "source": 55,
+          "name": "moment",
+          "dependency": "moment",
+          "title": "Regular Expression Denial of Service",
+          "url": "https://npmjs.com/advisories/55",
+          "severity": "moderate",
+          "range": "<2.11.2"
+        }
+      ],
+      "effects": [],
+      "range": "<=2.19.2",
+      "nodes": [
+        "node_modules/moment"
+      ],
+      "fixAvailable": {
+        "name": "moment",
+        "version": "2.29.1",
+        "isSemVerMajor": true
+      }
+    },
+    "npm": {
+      "name": "npm",
+      "severity": "high",
+      "via": [
+        {
+          "source": 1436,
+          "name": "npm",
+          "dependency": "npm",
+          "title": "Symlink reference outside of node_modules",
+          "url": "https://npmjs.com/advisories/1436",
+          "severity": "low",
+          "range": "<6.13.3"
+        },
+        {
+          "source": 1437,
+          "name": "npm",
+          "dependency": "npm",
+          "title": "Global node_modules Binary Overwrite",
+          "url": "https://npmjs.com/advisories/1437",
+          "severity": "low",
+          "range": "<6.13.4"
+        },
+        {
+          "source": 152,
+          "name": "npm",
+          "dependency": "npm",
+          "title": "Local Privilege Escalation",
+          "url": "https://npmjs.com/advisories/152",
+          "severity": "low",
+          "range": "<1.3.3"
+        },
+        {
+          "source": 1543,
+          "name": "npm",
+          "dependency": "npm",
+          "title": "Sensitive Data Exposure",
+          "url": "https://npmjs.com/advisories/1543",
+          "severity": "low",
+          "range": "<6.14.6"
+        },
+        {
+          "source": 98,
+          "name": "npm",
+          "dependency": "npm",
+          "title": "npm Token Leak",
+          "url": "https://npmjs.com/advisories/98",
+          "severity": "high",
+          "range": "<= 2.15.0 || >= 3.0.0 <= 3.8.2"
+        }
+      ],
+      "effects": [],
+      "range": "<=6.14.5",
+      "nodes": [
+        ""
+      ],
+      "fixAvailable": true
+    },
+    "optimist": {
+      "name": "optimist",
+      "severity": "low",
+      "via": [
+        "minimist"
+      ],
+      "effects": [
+        "webpack"
+      ],
+      "range": ">=0.6.0",
+      "nodes": [
+        "node_modules/optimist"
+      ],
+      "fixAvailable": {
+        "name": "webpack",
+        "version": "5.16.0",
+        "isSemVerMajor": true
+      }
+    },
+    "webpack": {
+      "name": "webpack",
+      "severity": "low",
+      "via": [
+        "optimist"
+      ],
+      "effects": [],
+      "range": "0.11.0-beta1 - 2.0.2-beta",
+      "nodes": [
+        "node_modules/webpack"
+      ],
+      "fixAvailable": {
+        "name": "webpack",
+        "version": "5.16.0",
+        "isSemVerMajor": true
+      }
+    }
+  },
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 7,
+      "moderate": 3,
+      "high": 2,
+      "critical": 0,
+      "total": 12
+    },
+    "dependencies": {
+      "prod": 4,
+      "dev": 265,
+      "optional": 4,
+      "peer": 0,
+      "peerOptional": 0,
+      "total": 268
+    }
+  }
+}

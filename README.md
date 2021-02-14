@@ -14,6 +14,20 @@ vulnerable to [security exploits](https://en.wikipedia.org/wiki/Exploit_(compute
 In order of severity, the possible levels of severity are `info`, `low`, `moderate`, `high` and `critical`, 
 where `critical` is the most severe.
 
-## Compatibility
-Known working platforms:
+
+## Directions of use
+### Running using `invoke`
+
+#### Example usage: 
+`invoke highest-severity -i tests/end_to_end_tests/test_data/part-2-input.json -o output_file.json -e`
+
+For more information run `invoke --help highest-severity`.
+
+### Compatibility
+#### Known working platforms:
 - Ubuntu with Python 3.9
+
+## Running tests
+`python3.9 -m pip install -r requirements.txt -r tests/requirements.txt`
+
+`python3.9 -m nose `
